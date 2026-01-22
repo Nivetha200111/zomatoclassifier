@@ -1,0 +1,30 @@
+# Android
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/app/build/
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Node/Next.js
+node_modules/
+.next/
+out/
+.env*.local
+
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

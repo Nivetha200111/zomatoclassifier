@@ -1,0 +1,127 @@
+package com.goalwheel.demo.data
+
+object MockDishes {
+    val dishes = listOf(
+        Dish(
+            id = "1",
+            name = "Grilled Chicken Salad",
+            description = "Tender grilled chicken breast on mixed greens with cherry tomatoes and light vinaigrette",
+            price = 349,
+            calories = 320,
+            protein = 42,
+            carbs = 12,
+            fat = 14,
+            fiber = 6,
+            isFried = false,
+            isSugary = false,
+            isVeg = false,
+            isBestseller = false
+        ),
+        Dish(
+            id = "2",
+            name = "Butter Chicken with Naan",
+            description = "Creamy tomato-based curry with tender chicken, served with fresh butter naan",
+            price = 429,
+            calories = 780,
+            protein = 38,
+            carbs = 62,
+            fat = 42,
+            fiber = 3,
+            isFried = false,
+            isSugary = false,
+            isVeg = false,
+            isBestseller = true
+        ),
+        Dish(
+            id = "3",
+            name = "Paneer Tikka",
+            description = "Marinated cottage cheese cubes grilled in tandoor with bell peppers and onions",
+            price = 299,
+            calories = 380,
+            protein = 22,
+            carbs = 8,
+            fat = 28,
+            fiber = 2,
+            isFried = false,
+            isSugary = false,
+            isVeg = true,
+            isBestseller = false
+        ),
+        Dish(
+            id = "4",
+            name = "Dal Makhani with Rice",
+            description = "Slow-cooked black lentils in creamy tomato gravy served with steamed basmati rice",
+            price = 279,
+            calories = 520,
+            protein = 18,
+            carbs = 72,
+            fat = 18,
+            fiber = 12,
+            isFried = false,
+            isSugary = false,
+            isVeg = true,
+            isBestseller = false
+        ),
+        Dish(
+            id = "5",
+            name = "Tandoori Prawns",
+            description = "Jumbo prawns marinated in yogurt and spices, char-grilled to perfection",
+            price = 549,
+            calories = 240,
+            protein = 36,
+            carbs = 4,
+            fat = 8,
+            fiber = 0,
+            isFried = false,
+            isSugary = false,
+            isVeg = false,
+            isBestseller = false
+        ),
+        Dish(
+            id = "6",
+            name = "Chole Bhature",
+            description = "Spiced chickpea curry served with deep-fried fluffy bread",
+            price = 199,
+            calories = 720,
+            protein = 16,
+            carbs = 85,
+            fat = 35,
+            fiber = 8,
+            isFried = true,
+            isSugary = false,
+            isVeg = true,
+            isBestseller = false
+        ),
+        Dish(
+            id = "7",
+            name = "Egg Biryani",
+            description = "Fragrant basmati rice layered with spiced boiled eggs and aromatic herbs",
+            price = 259,
+            calories = 480,
+            protein = 18,
+            carbs = 58,
+            fat = 20,
+            fiber = 2,
+            isFried = false,
+            isSugary = false,
+            isVeg = false,
+            isBestseller = true
+        ),
+        Dish(
+            id = "8",
+            name = "Greek Yogurt Parfait",
+            description = "Thick Greek yogurt layered with mixed berries, honey drizzle, and crunchy granola",
+            price = 229,
+            calories = 340,
+            protein = 24,
+            carbs = 38,
+            fat = 12,
+            fiber = 4,
+            isFried = false,
+            isSugary = true,
+            isVeg = true,
+            isBestseller = false
+        )
+    )
+}
+
