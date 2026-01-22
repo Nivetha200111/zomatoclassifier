@@ -21,9 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.goalwheel.demo.data.Dish
+import com.goalwheel.demo.logic.ContextMode
 import com.goalwheel.demo.logic.Goal
 import com.goalwheel.demo.logic.Reasons
 import com.goalwheel.demo.logic.Scoring
+import com.goalwheel.demo.logic.SwapSuggestion
 import com.goalwheel.demo.ui.theme.ZomatoRed
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,11 +33,15 @@ import com.goalwheel.demo.ui.theme.ZomatoRed
 fun DishBottomSheet(
     dish: Dish,
     currentGoal: Goal,
+    currentContext: ContextMode,
     scrubScore: Int?,
     isScrubbing: Boolean,
+    swapSuggestion: SwapSuggestion?,
     onGoalChange: (Goal) -> Unit,
+    onContextChange: (ContextMode) -> Unit,
     onScrubbing: (Boolean, Int?) -> Unit,
     onShowGoalWheel: () -> Unit,
+    onSwap: () -> Unit,
     onDismiss: () -> Unit
 ) {
     val gradientColors = when (dish.id.toIntOrNull()?.rem(5) ?: 0) {
@@ -46,9 +52,9 @@ fun DishBottomSheet(
         else -> listOf(Color(0xFFDC2626), Color(0xFF991B1B))
     }
     
-    val score = scrubScore ?: Scoring.scoreDish(dish, currentGoal)
+    val score = scrubScore ?: Scoring.scoreDish(dish, currentGoal, currentContext)
     val label = Scoring.getScoreLabel(score)
-    val reasons = Reasons.reasonsFor(dish, currentGoal)
+    val reasons = Reasons.reasonsFor(dish, currentGoal, currentContext)
     
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -65,7 +71,7 @@ fun DishBottomSheet(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
+                    .height(160.dp)
                     .background(Brush.linearGradient(gradientColors))
             ) {
                 // Close button
@@ -148,7 +154,7 @@ fun DishBottomSheet(
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = dish.description,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodySmall,
                             color = Color(0xFF9CA3AF)
                         )
                     }
@@ -160,12 +166,12 @@ fun DishBottomSheet(
                     )
                 }
                 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 
                 // Macro row
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     MacroCard(
                         value = "${dish.calories}",
@@ -193,7 +199,15 @@ fun DishBottomSheet(
                     )
                 }
                 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(20.dp))
+                
+                // Context Toggle Row
+                ContextToggleRow(
+                    currentContext = currentContext,
+                    onContextChange = onContextChange
+                )
+                
+                Spacer(modifier = Modifier.height(20.dp))
                 
                 // Goal Scrubber section
                 Surface(
@@ -205,6 +219,7 @@ fun DishBottomSheet(
                         GoalScrubber(
                             dish = dish,
                             currentGoal = currentGoal,
+                            currentContext = currentContext,
                             onGoalChange = onGoalChange,
                             onScrubbing = onScrubbing
                         )
@@ -262,10 +277,21 @@ fun DishBottomSheet(
                     label = label,
                     reasons = reasons,
                     goal = currentGoal,
+                    context = currentContext,
                     isAnimating = isScrubbing
                 )
                 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Swap Card
+                SwapCard(
+                    suggestion = swapSuggestion,
+                    goal = currentGoal,
+                    context = currentContext,
+                    onSwap = onSwap
+                )
+                
+                Spacer(modifier = Modifier.height(20.dp))
                 
                 // Add to Cart button
                 Button(
@@ -304,21 +330,21 @@ private fun MacroCard(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = color
             )
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
-                color = Color(0xFF6B7280)
+                color = Color(0xFF6B7280),
+                fontSize = 9.sp
             )
         }
     }
 }
-

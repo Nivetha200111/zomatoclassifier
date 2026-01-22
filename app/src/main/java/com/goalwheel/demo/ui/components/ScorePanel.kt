@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.goalwheel.demo.logic.ContextMode
 import com.goalwheel.demo.logic.Goal
 
 @Composable
@@ -26,6 +27,7 @@ fun ScorePanel(
     label: String,
     reasons: List<String>,
     goal: Goal,
+    context: ContextMode = ContextMode.NONE,
     isAnimating: Boolean = false
 ) {
     val animatedScore by animateIntAsState(
@@ -93,26 +95,61 @@ fun ScorePanel(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    // Goal badge
-                    Surface(
-                        color = goal.color.copy(alpha = 0.2f),
-                        shape = RoundedCornerShape(20.dp)
+                    // Goal + Context badges
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        Surface(
+                            color = goal.color.copy(alpha = 0.2f),
+                            shape = RoundedCornerShape(16.dp)
                         ) {
-                            Text(
-                                text = goal.emoji,
-                                fontSize = 16.sp
-                            )
-                            Text(
-                                text = goal.label,
-                                style = MaterialTheme.typography.labelMedium,
-                                color = goal.color,
-                                fontWeight = FontWeight.Medium
-                            )
+                            Row(
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    text = goal.emoji,
+                                    fontSize = 12.sp
+                                )
+                                Text(
+                                    text = goal.label,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = goal.color,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                        }
+                        
+                        // Context badge
+                        AnimatedVisibility(
+                            visible = context != ContextMode.NONE,
+                            enter = fadeIn() + expandHorizontally(),
+                            exit = fadeOut() + shrinkHorizontally()
+                        ) {
+                            Surface(
+                                color = context.color.copy(alpha = 0.2f),
+                                shape = RoundedCornerShape(16.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(3.dp)
+                                ) {
+                                    Text(
+                                        text = context.emoji,
+                                        fontSize = 10.sp
+                                    )
+                                    Text(
+                                        text = context.label,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = context.color,
+                                        fontWeight = FontWeight.Medium,
+                                        fontSize = 9.sp
+                                    )
+                                }
+                            }
                         }
                     }
                     
@@ -250,4 +287,3 @@ private fun ReasonItem(
         )
     }
 }
-

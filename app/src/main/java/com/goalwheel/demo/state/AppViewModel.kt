@@ -3,9 +3,12 @@ package com.goalwheel.demo.state
 import androidx.lifecycle.ViewModel
 import com.goalwheel.demo.data.Dish
 import com.goalwheel.demo.data.MockDishes
+import com.goalwheel.demo.logic.ContextMode
 import com.goalwheel.demo.logic.Goal
 import com.goalwheel.demo.logic.Reasons
 import com.goalwheel.demo.logic.Scoring
+import com.goalwheel.demo.logic.SwapSuggestion
+import com.goalwheel.demo.logic.Swaps
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 data class AppState(
     val dishes: List<Dish> = MockDishes.dishes,
     val currentGoal: Goal = Goal.Cutting,
+    val currentContext: ContextMode = ContextMode.NONE,
     val selectedDish: Dish? = null,
     val showGoalWheel: Boolean = false,
     val isScrubbing: Boolean = false,
@@ -48,6 +52,12 @@ class AppViewModel : ViewModel() {
         )
     }
     
+    fun setContext(context: ContextMode) {
+        _state.value = _state.value.copy(
+            currentContext = context
+        )
+    }
+    
     fun showGoalWheel() {
         _state.value = _state.value.copy(showGoalWheel = true)
     }
@@ -63,16 +73,32 @@ class AppViewModel : ViewModel() {
         )
     }
     
-    fun getScore(dish: Dish, goal: Goal = _state.value.currentGoal): Int {
-        return Scoring.scoreDish(dish, goal)
+    fun getScore(dish: Dish, goal: Goal = _state.value.currentGoal, context: ContextMode = _state.value.currentContext): Int {
+        return Scoring.scoreDish(dish, goal, context)
     }
     
-    fun getReasons(dish: Dish, goal: Goal = _state.value.currentGoal): List<String> {
-        return Reasons.reasonsFor(dish, goal)
+    fun getReasons(dish: Dish, goal: Goal = _state.value.currentGoal, context: ContextMode = _state.value.currentContext): List<String> {
+        return Reasons.reasonsFor(dish, goal, context)
     }
     
     fun getScoreLabel(score: Int): String {
         return Scoring.getScoreLabel(score)
     }
+    
+    fun getSwapSuggestion(dish: Dish): SwapSuggestion? {
+        return Swaps.getSwapSuggestion(
+            dish = dish,
+            goal = _state.value.currentGoal,
+            context = _state.value.currentContext,
+            allDishes = _state.value.dishes
+        )
+    }
+    
+    fun swapToDish(dish: Dish) {
+        _state.value = _state.value.copy(
+            selectedDish = dish,
+            scrubScore = null,
+            isScrubbing = false
+        )
+    }
 }
-

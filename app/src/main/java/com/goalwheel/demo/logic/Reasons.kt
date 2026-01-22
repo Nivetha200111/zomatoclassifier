@@ -4,13 +4,83 @@ import com.goalwheel.demo.data.Dish
 
 object Reasons {
     
-    fun reasonsFor(dish: Dish, goal: Goal): List<String> {
-        return when (goal) {
+    fun reasonsFor(dish: Dish, goal: Goal, context: ContextMode = ContextMode.NONE): List<String> {
+        val baseReasons = when (goal) {
             Goal.Cutting -> cuttingReasons(dish)
             Goal.Bulking -> bulkingReasons(dish)
             Goal.Performance -> performanceReasons(dish)
             Goal.LowGI -> lowGIReasons(dish)
             Goal.Recovery -> recoveryReasons(dish)
+        }.toMutableList()
+        
+        // Add context-specific reason if applicable
+        val contextReason = getContextReason(dish, goal, context)
+        if (contextReason != null) {
+            baseReasons[2] = contextReason
+        }
+        
+        return baseReasons.take(3)
+    }
+    
+    private fun getContextReason(dish: Dish, goal: Goal, context: ContextMode): String? {
+        return when (context) {
+            ContextMode.NONE -> null
+            ContextMode.POST_WORKOUT -> getPostWorkoutReason(dish)
+            ContextMode.LATE_NIGHT -> getLateNightReason(dish)
+            ContextMode.OFFICE_LUNCH -> getOfficeLunchReason(dish)
+        }
+    }
+    
+    private fun getPostWorkoutReason(dish: Dish): String {
+        return when {
+            dish.protein > 30 && !dish.isFried -> 
+                "High protein with easy digestion — ideal post-workout"
+            dish.protein > 25 -> 
+                "Good protein content supports muscle recovery"
+            dish.carbs > 40 && dish.protein > 15 -> 
+                "Carb-protein combo helps replenish glycogen"
+            dish.isFried -> 
+                "Fried preparation may slow post-workout absorption"
+            dish.protein < 15 -> 
+                "Lower protein — consider adding a protein source"
+            else -> 
+                "Moderate choice for post-workout recovery"
+        }
+    }
+    
+    private fun getLateNightReason(dish: Dish): String {
+        return when {
+            dish.calories < 350 && dish.fat < 15 -> 
+                "Light and easy to digest — suitable for late night"
+            dish.calories > 600 -> 
+                "Heavy meal — may disrupt sleep quality"
+            dish.isFried -> 
+                "Fried foods digest slowly — not ideal before bed"
+            dish.fat > 30 -> 
+                "High fat content may cause discomfort at night"
+            dish.protein > 20 && dish.fat < 20 -> 
+                "Lean protein without heavy fats — reasonable late choice"
+            else -> 
+                "Moderate weight — timing matters for digestion"
+        }
+    }
+    
+    private fun getOfficeLunchReason(dish: Dish): String {
+        return when {
+            dish.calories in 350..550 && !dish.isFried -> 
+                "Balanced energy — helps maintain afternoon focus"
+            dish.calories > 700 -> 
+                "Heavy meal may cause afternoon energy dip"
+            dish.isFried -> 
+                "Fried foods can trigger post-lunch sluggishness"
+            dish.isSugary -> 
+                "Sugar spike followed by crash — affects productivity"
+            dish.fiber > 5 && dish.protein > 15 -> 
+                "Fiber and protein promote sustained satiety"
+            dish.calories < 300 -> 
+                "Light portion — may need a snack later"
+            else -> 
+                "Adequate for office lunch — moderate energy load"
         }
     }
     
@@ -143,4 +213,3 @@ object Reasons {
         return reasons.take(3)
     }
 }
-

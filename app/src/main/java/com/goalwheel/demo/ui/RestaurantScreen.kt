@@ -62,13 +62,6 @@ fun RestaurantScreen(
                 }
             }
             
-            // Concept banner
-            item {
-                ConceptBanner(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                )
-            }
-            
             // Dish cards
             itemsIndexed(state.dishes) { _, dish ->
                 com.goalwheel.demo.ui.components.DishCard(
@@ -131,14 +124,24 @@ fun RestaurantScreen(
         
         // Dish Bottom Sheet
         state.selectedDish?.let { dish ->
+            val swapSuggestion = remember(dish, state.currentGoal, state.currentContext) {
+                viewModel.getSwapSuggestion(dish)
+            }
+            
             DishBottomSheet(
                 dish = dish,
                 currentGoal = state.currentGoal,
+                currentContext = state.currentContext,
                 scrubScore = state.scrubScore,
                 isScrubbing = state.isScrubbing,
+                swapSuggestion = swapSuggestion,
                 onGoalChange = { viewModel.setGoal(it) },
+                onContextChange = { viewModel.setContext(it) },
                 onScrubbing = { scrubbing, score -> viewModel.setScrubbing(scrubbing, score) },
                 onShowGoalWheel = { viewModel.showGoalWheel() },
+                onSwap = {
+                    swapSuggestion?.let { viewModel.swapToDish(it.suggestedDish) }
+                },
                 onDismiss = { viewModel.closeDishSheet() }
             )
         }
@@ -156,49 +159,3 @@ fun RestaurantScreen(
         }
     }
 }
-
-@Composable
-private fun ConceptBanner(modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        color = Color(0xFFE23744).copy(alpha = 0.1f),
-        shape = MaterialTheme.shapes.large
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.Top
-        ) {
-            Surface(
-                modifier = Modifier.size(44.dp),
-                color = ZomatoRed,
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Text(
-                        text = "💡",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
-            }
-            
-            Column {
-                Text(
-                    text = "Goal Wheel Concept",
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "Tap any dish to see how its meaning changes based on your fitness goal. Same food, different interpretation.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color(0xFF9CA3AF),
-                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight
-                )
-            }
-        }
-    }
-}
-
-

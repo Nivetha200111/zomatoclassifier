@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.goalwheel.demo.data.Dish
+import com.goalwheel.demo.logic.ContextMode
 import com.goalwheel.demo.logic.Goal
 import com.goalwheel.demo.logic.Scoring
 import kotlin.math.roundToInt
@@ -30,6 +31,7 @@ import kotlin.math.roundToInt
 fun GoalScrubber(
     dish: Dish,
     currentGoal: Goal,
+    currentContext: ContextMode,
     onGoalChange: (Goal) -> Unit,
     onScrubbing: (Boolean, Int?) -> Unit
 ) {
@@ -50,14 +52,14 @@ fun GoalScrubber(
     )
     
     // Calculate interpolated score while dragging
-    LaunchedEffect(sliderPosition, isDragging) {
+    LaunchedEffect(sliderPosition, isDragging, currentContext) {
         if (isDragging) {
             val lowerIndex = sliderPosition.toInt().coerceIn(0, goals.size - 2)
             val upperIndex = (lowerIndex + 1).coerceIn(0, goals.size - 1)
             val fraction = sliderPosition - lowerIndex
             
-            val lowerScore = Scoring.scoreDish(dish, goals[lowerIndex])
-            val upperScore = Scoring.scoreDish(dish, goals[upperIndex])
+            val lowerScore = Scoring.scoreDish(dish, goals[lowerIndex], currentContext)
+            val upperScore = Scoring.scoreDish(dish, goals[upperIndex], currentContext)
             val interpolatedScore = (lowerScore + (upperScore - lowerScore) * fraction).roundToInt()
             
             onScrubbing(true, interpolatedScore)
@@ -251,4 +253,3 @@ fun GoalScrubber(
         )
     }
 }
-
