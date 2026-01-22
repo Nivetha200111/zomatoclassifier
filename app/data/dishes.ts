@@ -14,7 +14,8 @@ export interface Dish {
   protein: number;
   carbs: number;
   fat: number;
-  imageGradient: string;
+  isVeg: boolean;
+  imageUrl: string;
   goals: Record<GoalType, GoalData>;
 }
 
@@ -36,7 +37,8 @@ export const dishes: Dish[] = [
     protein: 42,
     carbs: 12,
     fat: 14,
-    imageGradient: 'linear-gradient(135deg, #22c55e 0%, #15803d 100%)',
+    isVeg: false,
+    imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 92,
@@ -69,7 +71,8 @@ export const dishes: Dish[] = [
     protein: 38,
     carbs: 62,
     fat: 42,
-    imageGradient: 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)',
+    isVeg: false,
+    imageUrl: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 35,
@@ -102,7 +105,8 @@ export const dishes: Dish[] = [
     protein: 22,
     carbs: 8,
     fat: 28,
-    imageGradient: 'linear-gradient(135deg, #eab308 0%, #a16207 100%)',
+    isVeg: true,
+    imageUrl: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 68,
@@ -135,7 +139,8 @@ export const dishes: Dish[] = [
     protein: 18,
     carbs: 72,
     fat: 18,
-    imageGradient: 'linear-gradient(135deg, #78350f 0%, #451a03 100%)',
+    isVeg: true,
+    imageUrl: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 45,
@@ -168,7 +173,8 @@ export const dishes: Dish[] = [
     protein: 36,
     carbs: 4,
     fat: 8,
-    imageGradient: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+    isVeg: false,
+    imageUrl: 'https://images.unsplash.com/photo-1625943553852-781c6dd46faa?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 95,
@@ -201,7 +207,8 @@ export const dishes: Dish[] = [
     protein: 16,
     carbs: 85,
     fat: 35,
-    imageGradient: 'linear-gradient(135deg, #ca8a04 0%, #713f12 100%)',
+    isVeg: true,
+    imageUrl: 'https://images.unsplash.com/photo-1626132647523-66d0b294e0e8?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 25,
@@ -234,7 +241,8 @@ export const dishes: Dish[] = [
     protein: 18,
     carbs: 58,
     fat: 20,
-    imageGradient: 'linear-gradient(135deg, #fbbf24 0%, #b45309 100%)',
+    isVeg: false,
+    imageUrl: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 48,
@@ -267,7 +275,8 @@ export const dishes: Dish[] = [
     protein: 24,
     carbs: 38,
     fat: 12,
-    imageGradient: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)',
+    isVeg: true,
+    imageUrl: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop',
     goals: {
       cutting: {
         score: 72,

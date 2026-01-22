@@ -15,7 +15,8 @@ object MockDishes {
             isFried = false,
             isSugary = false,
             isVeg = false,
-            isBestseller = false
+            isBestseller = false,
+            imageUrl = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop"
         ),
         Dish(
             id = "2",
@@ -30,7 +31,8 @@ object MockDishes {
             isFried = false,
             isSugary = false,
             isVeg = false,
-            isBestseller = true
+            isBestseller = true,
+            imageUrl = "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop"
         ),
         Dish(
             id = "3",
@@ -45,7 +47,8 @@ object MockDishes {
             isFried = false,
             isSugary = false,
             isVeg = true,
-            isBestseller = false
+            isBestseller = false,
+            imageUrl = "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=400&h=300&fit=crop"
         ),
         Dish(
             id = "4",
@@ -60,7 +63,8 @@ object MockDishes {
             isFried = false,
             isSugary = false,
             isVeg = true,
-            isBestseller = false
+            isBestseller = false,
+            imageUrl = "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop"
         ),
         Dish(
             id = "5",
@@ -75,7 +79,8 @@ object MockDishes {
             isFried = false,
             isSugary = false,
             isVeg = false,
-            isBestseller = false
+            isBestseller = false,
+            imageUrl = "https://images.unsplash.com/photo-1625943553852-781c6dd46faa?w=400&h=300&fit=crop"
         ),
         Dish(
             id = "6",
@@ -90,7 +95,8 @@ object MockDishes {
             isFried = true,
             isSugary = false,
             isVeg = true,
-            isBestseller = false
+            isBestseller = false,
+            imageUrl = "https://images.unsplash.com/photo-1626132647523-66d0b294e0e8?w=400&h=300&fit=crop"
         ),
         Dish(
             id = "7",
@@ -105,7 +111,8 @@ object MockDishes {
             isFried = false,
             isSugary = false,
             isVeg = false,
-            isBestseller = true
+            isBestseller = true,
+            imageUrl = "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&h=300&fit=crop"
         ),
         Dish(
             id = "8",
@@ -120,7 +127,8 @@ object MockDishes {
             isFried = false,
             isSugary = true,
             isVeg = true,
-            isBestseller = false
+            isBestseller = false,
+            imageUrl = "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop"
         )
     )
 }

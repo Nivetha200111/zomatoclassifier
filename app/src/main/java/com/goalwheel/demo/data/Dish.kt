@@ -13,6 +13,7 @@ data class Dish(
     val isFried: Boolean,
     val isSugary: Boolean,
     val isVeg: Boolean,
-    val isBestseller: Boolean = false
+    val isBestseller: Boolean = false,
+    val imageUrl: String
 )
 

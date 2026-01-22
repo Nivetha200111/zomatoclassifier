@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.goalwheel.demo.data.Dish
 import com.goalwheel.demo.logic.ContextMode
 import com.goalwheel.demo.logic.Goal
@@ -44,14 +46,6 @@ fun DishBottomSheet(
     onSwap: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val gradientColors = when (dish.id.toIntOrNull()?.rem(5) ?: 0) {
-        0 -> listOf(Color(0xFF22C55E), Color(0xFF15803D))
-        1 -> listOf(Color(0xFFF97316), Color(0xFFC2410C))
-        2 -> listOf(Color(0xFFEAB308), Color(0xFFA16207))
-        3 -> listOf(Color(0xFF78350F), Color(0xFF451A03))
-        else -> listOf(Color(0xFFDC2626), Color(0xFF991B1B))
-    }
-    
     val score = scrubScore ?: Scoring.scoreDish(dish, currentGoal, currentContext)
     val label = Scoring.getScoreLabel(score)
     val reasons = Reasons.reasonsFor(dish, currentGoal, currentContext)
@@ -71,9 +65,31 @@ fun DishBottomSheet(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(160.dp)
-                    .background(Brush.linearGradient(gradientColors))
+                    .height(180.dp)
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .background(Color(0xFF1A1A24))
             ) {
+                // Food image
+                AsyncImage(
+                    model = dish.imageUrl,
+                    contentDescription = dish.name,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+                
+                // Gradient overlay
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black.copy(alpha = 0.6f)
+                                )
+                            )
+                        )
+                )
                 // Close button
                 IconButton(
                     onClick = onDismiss,

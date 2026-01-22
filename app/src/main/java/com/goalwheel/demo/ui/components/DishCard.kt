@@ -12,10 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.goalwheel.demo.data.Dish
 import com.goalwheel.demo.logic.Goal
 
@@ -27,14 +29,6 @@ fun DishCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val gradientColors = when (dish.id.toIntOrNull()?.rem(5) ?: 0) {
-        0 -> listOf(Color(0xFF22C55E), Color(0xFF15803D))
-        1 -> listOf(Color(0xFFF97316), Color(0xFFC2410C))
-        2 -> listOf(Color(0xFFEAB308), Color(0xFFA16207))
-        3 -> listOf(Color(0xFF78350F), Color(0xFF451A03))
-        else -> listOf(Color(0xFFDC2626), Color(0xFF991B1B))
-    }
-    
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -45,13 +39,34 @@ fun DishCard(
         )
     ) {
         Column {
-            // Image placeholder with gradient
+            // Food image
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
-                    .background(Brush.linearGradient(gradientColors))
+                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                    .background(Color(0xFF1A1A24))
             ) {
+                AsyncImage(
+                    model = dish.imageUrl,
+                    contentDescription = dish.name,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+                
+                // Gradient overlay for better readability
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black.copy(alpha = 0.3f)
+                                )
+                            )
+                        )
+                )
                 // Veg/Non-Veg indicator
                 Box(
                     modifier = Modifier

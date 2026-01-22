@@ -15,18 +15,16 @@ export default function DishCard({ dish, onClick, index }: DishCardProps) {
       className="group relative bg-gray-900/80 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer hover:border-gray-700 hover:shadow-xl hover:shadow-black/20 transition-all duration-300 animate-slideUp"
       style={{ animationDelay: `${index * 50}ms` }}
     >
-      {/* Image Placeholder */}
-      <div 
-        className="relative h-40 overflow-hidden"
-        style={{ background: dish.imageGradient }}
-      >
-        {/* Overlay Pattern */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%)`
-          }} />
-        </div>
+      {/* Food Image */}
+      <div className="relative h-40 overflow-hidden bg-gray-800">
+        <img 
+          src={dish.imageUrl} 
+          alt={dish.name}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+        
+        {/* Gradient Overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
@@ -45,14 +43,10 @@ export default function DishCard({ dish, onClick, index }: DishCardProps) {
         {/* Veg/Non-Veg Indicator */}
         <div className="absolute top-3 right-3">
           <div className={`w-5 h-5 border-2 ${
-            ['1', '3', '4', '6', '8'].includes(dish.id) 
-              ? 'border-green-500' 
-              : 'border-red-500'
+            dish.isVeg ? 'border-green-500' : 'border-red-500'
           } rounded-sm flex items-center justify-center bg-gray-900/80`}>
             <div className={`w-2 h-2 rounded-full ${
-              ['1', '3', '4', '6', '8'].includes(dish.id)
-                ? 'bg-green-500'
-                : 'bg-red-500'
+              dish.isVeg ? 'bg-green-500' : 'bg-red-500'
             }`} />
           </div>
         </div>

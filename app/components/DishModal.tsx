@@ -42,17 +42,15 @@ export default function DishModal({ dish, onClose }: DishModalProps) {
       <div className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-2xl md:max-h-[90vh] z-40 overflow-auto">
         <div className="bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl animate-scaleIn">
           {/* Header Image */}
-          <div 
-            className="relative h-44 md:h-52 rounded-t-2xl overflow-hidden"
-            style={{ background: dish.imageGradient }}
-          >
-            {/* Overlay Pattern */}
-            <div className="absolute inset-0 opacity-30">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(circle at 30% 70%, rgba(255,255,255,0.15) 0%, transparent 50%),
-                                 radial-gradient(circle at 70% 30%, rgba(255,255,255,0.2) 0%, transparent 50%)`
-              }} />
-            </div>
+          <div className="relative h-44 md:h-52 rounded-t-2xl overflow-hidden bg-gray-800">
+            <img 
+              src={dish.imageUrl} 
+              alt={dish.name}
+              className="w-full h-full object-cover"
+            />
+            
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
             {/* Close Button */}
             <button
@@ -67,14 +65,10 @@ export default function DishModal({ dish, onClose }: DishModalProps) {
             {/* Veg/Non-Veg Badge */}
             <div className="absolute top-4 left-4">
               <div className={`w-6 h-6 border-2 ${
-                ['1', '3', '4', '6', '8'].includes(dish.id)
-                  ? 'border-green-500'
-                  : 'border-red-500'
+                dish.isVeg ? 'border-green-500' : 'border-red-500'
               } rounded-sm flex items-center justify-center bg-gray-900/90`}>
                 <div className={`w-2.5 h-2.5 rounded-full ${
-                  ['1', '3', '4', '6', '8'].includes(dish.id)
-                    ? 'bg-green-500'
-                    : 'bg-red-500'
+                  dish.isVeg ? 'bg-green-500' : 'bg-red-500'
                 }`} />
               </div>
             </div>
