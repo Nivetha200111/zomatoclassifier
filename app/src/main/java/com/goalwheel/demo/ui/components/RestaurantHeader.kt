@@ -26,6 +26,7 @@ fun RestaurantHeader() {
                     )
                 )
             )
+            .statusBarsPadding()  // Add padding for status bar
             .padding(16.dp)
     ) {
         Column {
