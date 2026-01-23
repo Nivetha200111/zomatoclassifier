@@ -113,6 +113,7 @@ Open [http://localhost:3000](http://localhost:3000)
 4. **Situationally Intelligent** — The same goal means different things in different contexts
 
 ---
+## Here you go : lick on the link for sample - https://youtube.com/shorts/V5oHO14ZCT4?feature=share
 
 ## ⚠️ Disclaimer
 
